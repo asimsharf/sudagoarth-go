@@ -1,0 +1,24 @@
+# Root directory
+root = "."
+
+# Command to run when starting your application
+bin = "sudagoarth"
+
+# Paths to watch for changes
+include_dir = [
+    "cmd",
+    "internal",
+    "api"
+]
+
+# Paths to exclude from watching
+exclude_dir = [
+    "vendor",
+    "tmp",
+    ".git"
+]
+
+# Command to run on changes
+[[trigger]]
+paths = ["**/*.go"]
+command = "go build -o ./tmp/sudagoarth ./cmd/sudagoarth/main.go"
