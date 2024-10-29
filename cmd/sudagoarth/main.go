@@ -31,7 +31,7 @@ func main() {
 	}
 
 	// Set up the repository, service, and controller
-	repo := repositories.NewGORMEmployeeRepository(db)
+	repo := repositories.NewEmployeeRepository(db)
 	service := services.NewEmployeeService(repo)
 	controller := &controllers.EmployeeController{Service: service}
 

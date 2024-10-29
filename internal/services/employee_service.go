@@ -1,34 +1,34 @@
 package services
 
 import (
+	"sudagoarth.com/internal/interfaces"
 	"sudagoarth.com/internal/models"
-	"sudagoarth.com/internal/repositories"
 )
 
 type EmployeeService struct {
-	Repo repositories.EmployeeRepository
+	Face interfaces.EmployeeInterface
 }
 
-func NewEmployeeService(repo repositories.EmployeeRepository) *EmployeeService {
-	return &EmployeeService{Repo: repo}
+func NewEmployeeService(face interfaces.EmployeeInterface) *EmployeeService {
+	return &EmployeeService{Face: face}
 }
 
 func (s *EmployeeService) CreateEmployee(employee *models.Employee) error {
-	return s.Repo.Create(employee)
+	return s.Face.Create(employee)
 }
 
 func (s *EmployeeService) GetEmployeeByID(id uint) (*models.Employee, error) {
-	return s.Repo.GetByID(id)
+	return s.Face.GetByID(id)
 }
 
 func (s *EmployeeService) GetAllEmployees() ([]models.Employee, error) {
-	return s.Repo.GetAll()
+	return s.Face.GetAll()
 }
 
 func (s *EmployeeService) UpdateEmployee(employee *models.Employee) error {
-	return s.Repo.Update(employee)
+	return s.Face.Update(employee)
 }
 
 func (s *EmployeeService) DeleteEmployee(id uint) error {
-	return s.Repo.Delete(id)
+	return s.Face.Delete(id)
 }
