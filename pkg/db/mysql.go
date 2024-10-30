@@ -1,16 +1,29 @@
 package db
 
 import (
-	"database/sql"
 	"log"
 
-	_ "github.com/go-sql-driver/mysql"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"sudagoarth.com/config"
+	"sudagoarth.com/internal/models"
 )
 
-func ConnectMySQL(dsn string) *sql.DB {
-	db, err := sql.Open("mysql", dsn)
+func ConnectMySQL() (*gorm.DB, string) {
+	// Load the configuration
+	cfg := config.LoadConfig()
+
+	// Establish a database connection
+	db, err := gorm.Open(mysql.Open(cfg.DatabaseURL), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("Could not connect to database: %v", err)
 	}
-	return db
+
+	// Perform auto-migration
+	err = db.AutoMigrate(&models.Employee{})
+	if err != nil {
+		log.Fatalf("Could not migrate the database: %v", err)
+	}
+
+	return db, cfg.AppPort
 }
